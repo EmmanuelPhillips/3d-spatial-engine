@@ -24,6 +24,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(main
     app/main.cpp
     src/particle.cpp
+    src/grid.cpp
 )
 
 target_include_directories(main PRIVATE include)
