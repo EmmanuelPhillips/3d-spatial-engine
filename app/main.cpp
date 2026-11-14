@@ -14,6 +14,7 @@ int main() {
   // Grid parameters
   constexpr float grid_width{50.0f};
   constexpr float grid_height{50.0f};
+  constexpr float grid_length{50.0f}; // just for boundary collision
   constexpr float grid_interval{5.0f};
 
   constexpr Grid XY{Vector3{0.0f, 0.0f, 0.0f},
@@ -87,12 +88,16 @@ int main() {
     XY.DrawGridPlane();
     XZ.DrawGridPlane();
     YZ.DrawGridPlane();
+    DrawCubeWires(Vector3{0.0f, 0.0f, 0.0f}, grid_width, grid_height,
+                  grid_length, BLACK);
 
     for (auto &particle : particles) {
       particle.draw();
     }
     for (auto &particle : particles) {
       particle.update(time_interval);
+      particle.resolve_boundary_collision(grid_width / 2, grid_height / 2,
+                                          grid_length / 2);
     }
 
     EndMode3D();

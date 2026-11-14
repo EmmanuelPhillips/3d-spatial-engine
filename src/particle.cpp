@@ -23,3 +23,17 @@ void Particle::update(float delta_time) {
 }
 
 void Particle::draw() { DrawSphere(position_, radius_, colour_); }
+
+void Particle::resolve_boundary_collision(const float xbound,
+                                          const float ybound,
+                                          const float zbound) {
+  if (position_.x + radius_ >= xbound || position_.x - radius_ <= -xbound) {
+    velocity_.x *= -1;
+  }
+  if (position_.y + radius_ >= ybound || position_.y - radius_ <= -ybound) {
+    velocity_.y *= -1;
+  }
+  if (position_.z + radius_ >= zbound || position_.z - radius_ <= -zbound) {
+    velocity_.z *= -1;
+  }
+}

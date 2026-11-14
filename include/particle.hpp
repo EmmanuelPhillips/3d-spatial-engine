@@ -25,4 +25,7 @@ public:
 
   void update(float delta_time);
   void draw();
+
+  void resolve_boundary_collision(const float xbound, const float ybound,
+                                  const float zbound);
 };
