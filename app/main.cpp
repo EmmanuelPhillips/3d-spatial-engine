@@ -3,12 +3,15 @@
 
 #include "grid.hpp"
 #include "particle.hpp"
+#include "random.hpp"
 
 int main() {
 
+  // Window parameters
   constexpr float window_width{1280};
   constexpr float window_height{720};
 
+  // Grid parameters
   constexpr float grid_width{50.0f};
   constexpr float grid_height{50.0f};
   constexpr float grid_interval{5.0f};
@@ -35,9 +38,36 @@ int main() {
                     grid_width,
                     grid_height,
                     grid_interval,
-                    YELLOW};
+                    BLACK};
 
-  Particle p{RED, 10.0f, Vector3{0.0f, 0.0f, 0.0f}, Vector3{0.0f, 0.0f, 0.0f}};
+  // Particle parameters
+  constexpr Color colour{RED};
+  constexpr float min_radius{1.0f};
+  constexpr float max_radius{3.0f};
+  constexpr float min_position{-grid_width / 2};
+  constexpr float max_position{grid_width / 2};
+  constexpr float min_velocity{-2.0f};
+  constexpr float max_velocity{2.0f};
+  constexpr int num_particles{50};
+  constexpr float time_interval{1.0f};
+
+  // Generate random
+  Random random;
+
+  // Initialise particles
+  std::vector<Particle> particles;
+  particles.reserve(num_particles);
+  for (int i{0}; i < num_particles; ++i) {
+    float r{random.uniform(min_radius, max_radius)};
+    Vector3 p{random.uniform(min_position, max_position),
+              random.uniform(min_position, max_position),
+              random.uniform(min_position, max_position)};
+    Vector3 v{random.uniform(min_velocity, max_velocity),
+              random.uniform(min_velocity, max_velocity),
+              random.uniform(min_velocity, max_velocity)};
+
+    particles.emplace_back(Particle{colour, r, p, v});
+  }
 
   InitWindow(window_width, window_height, "3D Particle Collision Simulator");
   SetTargetFPS(60);
@@ -58,8 +88,12 @@ int main() {
     XZ.DrawGridPlane();
     YZ.DrawGridPlane();
 
-    DrawSphere(p.get_position(), p.get_radius(), p.get_colour());
-    DrawSphereWires(p.get_position(), p.get_radius(), 16, 16, BLACK);
+    for (auto &particle : particles) {
+      particle.draw();
+    }
+    for (auto &particle : particles) {
+      particle.update(time_interval);
+    }
 
     EndMode3D();
 

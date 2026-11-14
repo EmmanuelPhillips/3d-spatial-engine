@@ -21,3 +21,5 @@ void Particle::set_velocity(const Vector3 &v) { velocity_ = v; }
 void Particle::update(float delta_time) {
   position_ = Vector3Add(position_, Vector3Scale(velocity_, delta_time));
 }
+
+void Particle::draw() { DrawSphere(position_, radius_, colour_); }

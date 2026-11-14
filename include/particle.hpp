@@ -24,4 +24,5 @@ public:
   void set_velocity(const Vector3 &v);
 
   void update(float delta_time);
+  void draw();
 };
