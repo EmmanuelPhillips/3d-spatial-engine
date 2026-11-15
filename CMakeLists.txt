@@ -26,6 +26,7 @@ add_executable(main
     src/particle.cpp
     src/grid.cpp
     src/random.cpp
+    src/physics.cpp
 )
 
 target_include_directories(main PRIVATE include)

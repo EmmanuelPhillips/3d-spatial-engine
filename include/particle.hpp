@@ -22,6 +22,7 @@ public:
 
   void set_position(const Vector3 &p);
   void set_velocity(const Vector3 &v);
+  void set_colour(const Color &c);
 
   void update(float delta_time);
   void draw();

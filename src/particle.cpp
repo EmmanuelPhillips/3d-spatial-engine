@@ -17,6 +17,7 @@ Vector3 Particle::get_velocity() const { return velocity_; }
 
 void Particle::set_position(const Vector3 &p) { position_ = p; }
 void Particle::set_velocity(const Vector3 &v) { velocity_ = v; }
+void Particle::set_colour(const Color &c) { colour_ = c; }
 
 void Particle::update(float delta_time) {
   position_ = Vector3Add(position_, Vector3Scale(velocity_, delta_time));

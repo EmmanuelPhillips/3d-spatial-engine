@@ -3,6 +3,7 @@
 
 #include "grid.hpp"
 #include "particle.hpp"
+#include "physics.hpp"
 #include "random.hpp"
 
 int main() {
@@ -17,7 +18,7 @@ int main() {
   constexpr float grid_length{50.0f}; // just for boundary collision
   constexpr float grid_interval{5.0f};
 
-  constexpr Grid XY{Vector3{0.0f, 0.0f, 0.0f},
+  constexpr Grid XY{Vector3{0.0f, 0.0f, -grid_length / 2},
                     Vector3{1.0f, 0.0f, 0.0f},
                     Vector3{0.0f, 1.0f, 0.0f},
                     grid_width,
@@ -25,7 +26,7 @@ int main() {
                     grid_interval,
                     RED};
 
-  constexpr Grid XZ{Vector3{0.0f, 0.0f, 0.0f},
+  constexpr Grid XZ{Vector3{0.0f, -grid_height / 2, 0.0f},
                     Vector3{1.0f, 0.0f, 0.0f},
                     Vector3{0.0f, 0.0f, 1.0f},
                     grid_width,
@@ -33,7 +34,7 @@ int main() {
                     grid_interval,
                     PURPLE};
 
-  constexpr Grid YZ{Vector3{0.0f, 0.0f, 0.0f},
+  constexpr Grid YZ{Vector3{-grid_width / 2, 0.0f, 0.0f},
                     Vector3{0.0f, 1.0f, 0.0f},
                     Vector3{0.0f, 0.0f, 1.0f},
                     grid_width,
@@ -47,9 +48,9 @@ int main() {
   constexpr float max_radius{3.0f};
   constexpr float min_position{-grid_width / 2};
   constexpr float max_position{grid_width / 2};
-  constexpr float min_velocity{-2.0f};
-  constexpr float max_velocity{2.0f};
-  constexpr int num_particles{50};
+  constexpr float min_velocity{-1.0f};
+  constexpr float max_velocity{1.0f};
+  constexpr int num_particles{10};
   constexpr float time_interval{1.0f};
 
   // Generate random
@@ -98,6 +99,16 @@ int main() {
       particle.update(time_interval);
       particle.resolve_boundary_collision(grid_width / 2, grid_height / 2,
                                           grid_length / 2);
+    }
+    for (int i{0}; i < num_particles; ++i) {
+      for (int j{i + 1}; j < num_particles; ++j) {
+        if (Physics::check_particle_collision(particles[i], particles[j])) {
+          // Handle what happens on collision explicitly here
+          particles[i].set_colour(BLUE);
+          particles[j].set_colour(BLUE);
+          Physics::resolve_particle_velocity(particles[i], particles[j]);
+        }
+      }
     }
 
     EndMode3D();
