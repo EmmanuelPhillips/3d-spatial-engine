@@ -45,12 +45,12 @@ int main() {
   // Particle parameters
   constexpr Color colour{RED};
   constexpr float min_radius{1.0f};
-  constexpr float max_radius{3.0f};
+  constexpr float max_radius{5.0f};
   constexpr float min_position{-grid_width / 2};
   constexpr float max_position{grid_width / 2};
   constexpr float min_velocity{-1.0f};
   constexpr float max_velocity{1.0f};
-  constexpr int num_particles{10};
+  constexpr int num_particles{50};
   constexpr float time_interval{1.0f};
 
   // Generate random
@@ -83,6 +83,7 @@ int main() {
   while (!WindowShouldClose()) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    DrawFPS(0, 0);
 
     BeginMode3D(camera);
 
@@ -102,11 +103,13 @@ int main() {
     }
     for (int i{0}; i < num_particles; ++i) {
       for (int j{i + 1}; j < num_particles; ++j) {
-        if (Physics::check_particle_collision(particles[i], particles[j])) {
-          // Handle what happens on collision explicitly here
-          particles[i].set_colour(BLUE);
-          particles[j].set_colour(BLUE);
-          Physics::resolve_particle_velocity(particles[i], particles[j]);
+        auto collision_occured{
+            Physics::check_particle_collision(particles[i], particles[j])};
+        if (collision_occured) {
+          Physics::resolve_particle_overlap(particles[i], particles[j],
+                                            *collision_occured);
+          Physics::resolve_particle_velocity(particles[i], particles[j],
+                                             *collision_occured);
         }
       }
     }
