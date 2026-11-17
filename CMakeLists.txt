@@ -27,6 +27,8 @@ add_executable(main
     src/grid.cpp
     src/random.cpp
     src/physics.cpp
+    src/octtree.cpp
+    src/cube.cpp
 )
 
 target_include_directories(main PRIVATE include)
