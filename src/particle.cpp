@@ -2,6 +2,7 @@
 
 #include "particle.hpp"
 
+#include "raylib.h"
 #include "raymath.h"
 
 Particle::Particle(Color c, float r, Vector3 p, Vector3 v)
@@ -23,7 +24,10 @@ void Particle::update(float delta_time) {
   position_ = Vector3Add(position_, Vector3Scale(velocity_, delta_time));
 }
 
-void Particle::draw() { DrawSphere(position_, radius_, colour_); }
+void Particle::draw() {
+  DrawSphere(position_, radius_, colour_);
+  DrawSphereWires(position_, radius_, 16, 16, BLACK);
+}
 
 void Particle::resolve_boundary_collision(const float xbound,
                                           const float ybound,

@@ -44,13 +44,13 @@ int main() {
 
   // Particle parameters
   constexpr Color colour{RED};
-  constexpr float min_radius{1.0f};
+  constexpr float min_radius{3.5f};
   constexpr float max_radius{5.0f};
   constexpr float min_position{-grid_width / 2};
   constexpr float max_position{grid_width / 2};
   constexpr float min_velocity{-1.0f};
   constexpr float max_velocity{1.0f};
-  constexpr int num_particles{50};
+  constexpr int num_particles{20};
   constexpr float time_interval{1.0f};
 
   // Generate random
