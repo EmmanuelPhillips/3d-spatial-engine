@@ -10,6 +10,8 @@
 #include "cube.hpp"
 #include "particle.hpp"
 
+static constexpr std::size_t MAX_PARTICLES{8};
+
 class Octtree {
 private:
   Cube bounds_;
@@ -23,6 +25,6 @@ public:
   Octtree(Cube bounds, int current_depth, int max_depth);
   void subdivide();
   void insert(Particle *p);
-  std::vector<Particle *> query(const Particle &p);
+  std::vector<Particle *> query(const Particle &p, float max_radius);
   void clear();
 };

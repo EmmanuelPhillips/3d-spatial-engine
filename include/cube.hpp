@@ -10,4 +10,5 @@ struct Cube {
   float length;
 
   bool contains(const Particle &p) const;
+  bool intersects(const Vector3 &position, float search_radius) const;
 };
