@@ -8,5 +8,6 @@ private:
 
 public:
   Random();
+  explicit Random(std::mt19937::result_type seed);
   float uniform(float min, float max);
 };

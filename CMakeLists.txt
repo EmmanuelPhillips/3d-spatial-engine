@@ -33,3 +33,14 @@ add_executable(main
 
 target_include_directories(main PRIVATE include)
 target_link_libraries(main PRIVATE raylib)
+
+add_executable(benchmark
+benchmark/benchmark.cpp
+src/particle.cpp
+src/physics.cpp
+src/random.cpp
+src/cube.cpp
+src/octtree.cpp)
+
+target_include_directories(benchmark PRIVATE include)
+target_link_libraries(benchmark PRIVATE raylib)
